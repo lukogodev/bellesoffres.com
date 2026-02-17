@@ -1,0 +1,131 @@
+{
+    "products": [
+        {
+            "id": "1",
+            "title": "Montre Connectée Sport Pro",
+            "price": 45000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Abidjan, CI",
+            "seller": {
+                "id": "s1",
+                "name": "Boutique TechPlus",
+                "whatsapp": "+2250102030405"
+            },
+            "isFavorite": false,
+            "specs": [
+                {
+                    "label": "Marque",
+                    "value": "TechPro"
+                },
+                {
+                    "label": "Écran",
+                    "value": "OLED 1.5\""
+                },
+                {
+                    "label": "Autonomie",
+                    "value": "48h"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "title": "Nike Airforce 1 Edition Limitée",
+            "price": 65000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
+            "category": "Mode",
+            "location": "Dakar, SN",
+            "seller": {
+                "id": "s2",
+                "name": "StreetWear 221",
+                "whatsapp": "+221770000000"
+            },
+            "isFavorite": true,
+            "specs": [
+                {
+                    "label": "Marque",
+                    "value": "Nike"
+                },
+                {
+                    "label": "Pointure",
+                    "value": "42-44"
+                },
+                {
+                    "label": "Matière",
+                    "value": "Cuir"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "title": "Appartement de luxe - Plateau",
+            "price": 250000,
+            "currency": "FCFA/mois",
+            "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
+            "category": "Immobilier",
+            "location": "Abidjan, CI",
+            "seller": {
+                "id": "s3",
+                "name": "Immo Prestige",
+                "whatsapp": "+22507070707"
+            },
+            "isFavorite": false,
+            "specs": [
+                {
+                    "label": "Type",
+                    "value": "F3"
+                },
+                {
+                    "label": "Surface",
+                    "value": "120m²"
+                },
+                {
+                    "label": "Étage",
+                    "value": "4ème"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "title": "Toyota Hilux 2022 Neuf",
+            "price": 18000000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800",
+            "category": "Voitures",
+            "location": "Lomé, TG",
+            "seller": {
+                "id": "s4",
+                "name": "Auto Express",
+                "whatsapp": "+22890000000"
+            },
+            "isFavorite": false,
+            "specs": [
+                {
+                    "label": "Marque",
+                    "value": "Toyota"
+                },
+                {
+                    "label": "Année",
+                    "value": "2022"
+                },
+                {
+                    "label": "Carburant",
+                    "value": "Diesel"
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "id": "u1",
+            "name": "Utilisateur Test",
+            "email": "test@example.com",
+            "avatar": "https://placehold.co/100x100/chocolate/beige.png",
+            "favorites": [
+                "2"
+            ]
+        }
+    ]
+}
