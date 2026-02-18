@@ -12,7 +12,8 @@ import {
     LogOut,
     Bell,
     Lock,
-    Scale
+    Scale,
+    HelpCircle
 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import AppContainer from '@/components/AppContainer';
@@ -96,6 +97,13 @@ export default function SettingsPage() {
                                 icon={Info}
                                 label="À Propos"
                                 href="/about"
+                            />
+                            <SettingItem
+                                icon={HelpCircle}
+                                label="Besoin d'aide ?"
+                                href="/help"
+                                color="bg-blue-50"
+                                textColor="text-blue-500"
                             />
                         </div>
                     </div>

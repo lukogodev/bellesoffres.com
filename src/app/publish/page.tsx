@@ -93,7 +93,7 @@ export default function PublishPage() {
                 backUrl="/"
             />
 
-            <main className="max-w-6xl mx-auto px-4 py-8 pb-32">
+            <main className="px-4 py-8 pb-32">
                 <div className="bg-[#FAF9F6] rounded-[3rem] border border-chocolate/5 p-6 md:p-12 shadow-sm">
                     <div className="space-y-12">
 

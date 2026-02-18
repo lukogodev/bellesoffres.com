@@ -26,7 +26,7 @@ export default function FavoritesPage() {
                 }
             />
 
-            <main className="max-w-[1280px] mx-auto px-4 py-8 pb-32">
+            <main className="px-4 py-8 pb-32">
                 {favorites.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-8">
                         {favorites.map((product, idx) => (

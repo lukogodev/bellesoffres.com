@@ -115,6 +115,156 @@
                     "value": "Diesel"
                 }
             ]
+        },
+        {
+            "id": "5",
+            "title": "iPhone 15 Pro Max 256GB",
+            "price": 1250000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Kinshasa, RDC",
+            "seller": {
+                "id": "s5",
+                "name": "I-Store RDC",
+                "whatsapp": "+243810000000"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "6",
+            "title": "MacBook Pro M3 14\"",
+            "price": 1850000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1517336714460-d15024229188?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Lubumbashi, RDC",
+            "seller": {
+                "id": "s6",
+                "name": "Digital World",
+                "whatsapp": "+243820000000"
+            },
+            "isFavorite": true
+        },
+        {
+            "id": "7",
+            "title": "Sac à main Chanel Classique",
+            "price": 3200000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=800",
+            "category": "Mode",
+            "location": "Libreville, GA",
+            "seller": {
+                "id": "s7",
+                "name": "Luxe & Chic",
+                "whatsapp": "+24170000000"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "8",
+            "title": "PS5 Slim Edition + 2 Manettes",
+            "price": 450000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1606813907291-d86ebb9474ad?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Abidjan, CI",
+            "seller": {
+                "id": "s8",
+                "name": "GameZone CI",
+                "whatsapp": "+22505050505"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "9",
+            "title": "Mercedes-Benz Classe G 63",
+            "price": 145000000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1520031444948-dcc5e25da9f0?auto=format&fit=crop&q=80&w=800",
+            "category": "Voitures",
+            "location": "Cotonou, BJ",
+            "seller": {
+                "id": "s9",
+                "name": "Prestige Motors",
+                "whatsapp": "+22990000000"
+            },
+            "isFavorite": true
+        },
+        {
+            "id": "10",
+            "title": "Canapé d'angle Moderne",
+            "price": 650000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
+            "category": "Maison",
+            "location": "Brazzaville, CG",
+            "seller": {
+                "id": "s10",
+                "name": "Home Design",
+                "whatsapp": "+24206000000"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "11",
+            "title": "Rolex Datejust 41",
+            "price": 8500000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1547921590-d1bdba693cc7?auto=format&fit=crop&q=80&w=800",
+            "category": "Mode",
+            "location": "Kinshasa, RDC",
+            "seller": {
+                "id": "s11",
+                "name": "L'Heure d'Or",
+                "whatsapp": "+243910000000"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "12",
+            "title": "Drone DJI Mavic 3",
+            "price": 1400000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1473968311357-12349887707e?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Douala, CM",
+            "seller": {
+                "id": "s12",
+                "name": "Cameroon Tech",
+                "whatsapp": "+23760000000"
+            },
+            "isFavorite": false
+        },
+        {
+            "id": "13",
+            "title": "Villa de luxe Kintambo",
+            "price": 1500000000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=800",
+            "category": "Immobilier",
+            "location": "Kinshasa, RDC",
+            "seller": {
+                "id": "s13",
+                "name": "Kin Immo Real Estate",
+                "whatsapp": "+243850000000"
+            },
+            "isFavorite": true
+        },
+        {
+            "id": "14",
+            "title": "Appareil Photo Sony A7 III",
+            "price": 950000,
+            "currency": "FCFA",
+            "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
+            "category": "Tech",
+            "location": "Yamoussoukro, CI",
+            "seller": {
+                "id": "s14",
+                "name": "Photo Pro",
+                "whatsapp": "+22501000000"
+            },
+            "isFavorite": false
         }
     ],
     "users": [

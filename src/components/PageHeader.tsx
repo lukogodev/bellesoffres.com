@@ -21,55 +21,45 @@ export default function PageHeader({
 }: PageHeaderProps) {
     if (variant === 'home') {
         return (
-            <header className="w-full sticky top-0 z-[60] bg-chocolate flex justify-center shadow-md">
-                <div className="w-full max-w-6xl px-4 py-4 flex justify-between items-center bg-chocolate text-beige">
-                    {/* Mobile: Menu icon left */}
-                    <button className="md:hidden p-2 hover:bg-beige/10 rounded-full transition-all">
-                        <Menu size={24} />
-                    </button>
-
-                    {/* Logo: Centered on mobile, Left on desktop */}
-                    <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
-                        <h1 className="text-xl md:text-2xl font-[900] tracking-[0.1em] uppercase leading-none italic">
-                            Belles Offres
-                        </h1>
-                    </div>
-
-                    {/* Desktop: Actions right */}
-                    <div className="hidden md:flex items-center gap-6">
-                        <Link href="/publish" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
-                            <Plus size={18} />
-                            Vendre
+            <header className="w-full sticky top-0 z-[60] bg-chocolate shadow-md">
+                <div className="w-full px-4 py-4 md:py-6 flex items-center bg-chocolate text-beige">
+                    {/* Navigation Buttons Left */}
+                    <div className="flex items-center gap-1 md:gap-4 shrink-0">
+                        <Link href="/menu" className="p-2 hover:bg-beige/10 rounded-full transition-all">
+                            <Menu size={22} />
                         </Link>
-                        <Link href="/favorites" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
-                            <Heart size={18} />
-                            Favoris
+                        <Link href="/publish" className="p-2 hover:bg-beige/10 rounded-full transition-all flex items-center gap-2">
+                            <Plus size={20} className="text-white" />
                         </Link>
-                        <Link href="/feed" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
-                            <Play size={18} />
-                            Vidéos
+                        <Link href="/favorites" className="p-2 hover:bg-beige/10 rounded-full transition-all">
+                            <Heart size={20} />
                         </Link>
-                        <Link href="/profile" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
-                            <User size={18} />
-                            Profil
+                        <Link href="/profile" className="p-2 hover:bg-beige/10 rounded-full transition-all">
+                            <User size={20} />
                         </Link>
                     </div>
 
-                    {/* Mobile Spacer (to keep logo centered) */}
-                    <div className="w-10 md:hidden" />
+                    {/* Site Title / Logo */}
+                    <div className="flex-1 ml-4 overflow-hidden">
+                        <Link href="/">
+                            <h1 className="text-lg md:text-2xl font-[1000] tracking-tighter uppercase leading-none italic truncate">
+                                Belles <span className="text-white">Offres</span>
+                            </h1>
+                        </Link>
+                    </div>
                 </div>
             </header>
         );
     }
 
     return (
-        <header className="w-full sticky top-0 z-[60] bg-chocolate flex justify-center border-b border-beige/10">
-            <div className="w-full max-w-6xl px-4 py-3 flex items-center justify-between bg-chocolate text-beige">
+        <header className="w-full sticky top-0 z-[60] bg-chocolate border-b border-white/5">
+            <div className="w-full px-4 py-4 flex items-center justify-between bg-chocolate text-beige">
                 <Link href={backUrl} className="text-beige p-2 hover:bg-beige/10 rounded-full transition-all shrink-0">
                     <ArrowLeft size={20} strokeWidth={3} />
                 </Link>
 
-                <h1 className="text-sm font-black tracking-[0.1em] uppercase flex items-center gap-2 truncate px-4">
+                <h1 className="text-xs font-black tracking-widest uppercase flex items-center gap-2 truncate px-4">
                     {icon && <span className="flex items-center">{icon}</span>}
                     <span className="truncate">{title}</span>
                 </h1>

@@ -16,8 +16,10 @@ interface AppContainerProps {
  */
 export default function AppContainer({ children, className = '' }: AppContainerProps) {
     return (
-        <div className={`min-h-screen ${className}`}>
-            {children}
+        <div className="min-h-screen bg-[#F4F4F4] flex justify-center">
+            <div className={`w-full max-w-5xl bg-white shadow-sm flex flex-col min-h-screen relative ${className}`}>
+                {children}
+            </div>
         </div>
     );
 }

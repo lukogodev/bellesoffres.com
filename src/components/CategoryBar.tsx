@@ -36,8 +36,8 @@ export default function CategoryBar() {
     };
 
     return (
-        <div className="w-full bg-chocolate flex justify-center border-b border-beige/5">
-            <div className="w-full max-w-6xl overflow-x-auto no-scrollbar py-4 px-4 space-x-6 flex items-start bg-chocolate">
+        <div className="w-full bg-chocolate border-b border-white/5">
+            <div className="w-full overflow-x-auto no-scrollbar py-6 px-4 space-x-8 flex items-start bg-chocolate">
                 {categories.map((cat) => {
                     const isSelected = selected === cat.id;
                     const Icon = cat.icon;
@@ -49,8 +49,8 @@ export default function CategoryBar() {
                             className="flex flex-col items-center gap-2 min-w-[70px] group transition-all"
                         >
                             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${isSelected
-                                    ? 'bg-beige text-chocolate shadow-lg shadow-black/20 scale-105'
-                                    : 'bg-beige/10 text-beige/60 group-hover:bg-beige/20 group-hover:text-beige'
+                                ? 'bg-beige text-chocolate shadow-lg shadow-black/20 scale-105'
+                                : 'bg-beige/10 text-beige/60 group-hover:bg-beige/20 group-hover:text-beige'
                                 }`}>
                                 <Icon className="w-5 h-5 stroke-[2]" />
                             </div>

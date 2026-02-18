@@ -15,6 +15,7 @@ import {
     Play,
     Info,
     ChevronLeft,
+    ChevronRight,
     Zap
 } from 'lucide-react';
 import ListingCard from "@/components/ListingCard";
@@ -60,7 +61,7 @@ export default function ProductPage() {
 
     function SellerCard({ seller }: { seller: Product['seller'] }) {
         return (
-            <div className="bg-[#FAF9F6] border border-chocolate/5 rounded-[2.5rem] p-8 shadow-sm">
+            <Link href={`/shop/prestige`} className="block bg-[#FAF9F6] border border-chocolate/5 rounded-[2.5rem] p-8 shadow-sm hover:bg-beige/10 transition-all active:scale-[0.98]">
                 <div className="flex items-start gap-5">
                     <div className="w-20 h-20 rounded-full bg-white border-[4px] border-beige overflow-hidden shadow-md shrink-0">
                         <div className="w-full h-full bg-gray-100 flex items-center justify-center text-2xl font-black text-chocolate font-sans">
@@ -71,7 +72,7 @@ export default function ProductPage() {
                         <h3 className="font-black text-xl text-chocolate tracking-tight font-sans italic">{seller.name}</h3>
 
                         {/* Système d'avis étoilés */}
-                        <div className="flex items-center gap-1.5 mt-1 mb-4">
+                        <div className="flex items-center gap-1.5 mt-1 mb-1">
                             <div className="flex text-yellow-500 scale-90 -ml-1">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <span key={star} className="text-lg">★</span>
@@ -79,27 +80,38 @@ export default function ProductPage() {
                             </div>
                             <span className="text-[11px] font-black text-chocolate/40 uppercase tracking-widest">(4.8 • 12 avis)</span>
                         </div>
-
-                        <a
-                            href={`https://wa.me/${seller.whatsapp.replace(/\D/g, '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full bg-whatsapp hover:bg-[#1ebc57] text-white font-black py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-green-200/50 transition-all active:scale-95 mb-4"
-                        >
-                            <WhatsAppIcon />
-                            <span className="text-sm uppercase tracking-widest">Contacter</span>
-                        </a>
+                        <p className="text-[10px] font-bold text-chocolate/30 uppercase tracking-[0.2em]">Membre depuis 2 ans</p>
                     </div>
+                    <ChevronRight className="text-chocolate/20" size={20} />
                 </div>
-            </div>
+            </Link>
+        );
+    }
+
+    function WhatsAppButton({ seller }: { seller: Product['seller'] }) {
+        return (
+            <a
+                href={`https://wa.me/${seller.whatsapp.replace(/\D/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-whatsapp hover:bg-[#1ebc57] text-white font-black py-5 px-6 rounded-3xl flex items-center justify-center gap-4 shadow-xl shadow-green-100/50 transition-all active:scale-95 group"
+            >
+                <div className="p-2 bg-white/20 rounded-xl group-hover:scale-110 transition-transform">
+                    <WhatsAppIcon />
+                </div>
+                <div className="flex flex-col items-start leading-none">
+                    <span className="text-[10px] opacity-80 uppercase tracking-widest font-black mb-1">Discuter sur</span>
+                    <span className="text-lg uppercase">WhatsApp</span>
+                </div>
+            </a>
         );
     }
 
     function FeatureItem({ label, value }: { label: string, value: string }) {
         return (
-            <div className="flex flex-col gap-1 items-start p-4 bg-beige/40 rounded-2xl border border-chocolate/5 group hover:bg-beige/60 transition-all">
-                <span className="text-[9px] font-black text-chocolate/50 uppercase tracking-[0.2em]">{label}</span>
-                <span className="text-[13px] font-black text-chocolate leading-tight">{value}</span>
+            <div className="flex flex-col gap-1 items-start p-5 bg-beige/30 rounded-3xl border border-chocolate/5 group hover:bg-beige/50 transition-all">
+                <span className="text-[9px] font-black text-chocolate/50 uppercase tracking-[0.3em]">{label}</span>
+                <span className="text-[14px] font-black text-chocolate leading-tight">{value}</span>
             </div>
         );
     }
@@ -117,18 +129,18 @@ export default function ProductPage() {
                 }
             />
 
-            <main className="max-w-[1280px] mx-auto px-4 py-8 pb-32">
+            <main className="pb-32">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
                     <div className="lg:col-span-2 space-y-12">
-                        {/* 1. Galerie Média */}
+                        {/* 1. Galerie Média - Full Width on Mobile */}
                         <div className="space-y-4">
-                            <div className="relative aspect-[4/3] md:aspect-video w-full bg-[#FAF9F6] rounded-[2.5rem] overflow-hidden border border-chocolate/5 shadow-inner">
+                            <div className="relative aspect-square w-full bg-[#FAF9F6] lg:rounded-[2.5rem] overflow-hidden border-b border-chocolate/5 shadow-inner">
                                 <Image
                                     src={gallery[activeImage] || product.image}
                                     alt={product.title}
                                     fill
-                                    className="object-contain p-4 md:p-8 transition-all duration-700"
+                                    className="object-cover transition-all duration-700"
                                 />
                                 {activeImage === 2 && (
                                     <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-[2px]">
@@ -144,7 +156,7 @@ export default function ProductPage() {
                                     <button
                                         key={idx}
                                         onClick={() => setActiveImage(idx)}
-                                        className={`relative w-20 h-20 flex-shrink-0 rounded-2xl overflow-hidden border-2 transition-all ${activeImage === idx ? 'border-chocolate shadow-xl scale-105' : 'border-transparent opacity-60 hover:opacity-100'
+                                        className={`relative w-22 h-22 flex-shrink-0 rounded-[2rem] overflow-hidden border-2 transition-all ${activeImage === idx ? 'border-chocolate shadow-xl scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                                             }`}
                                     >
                                         <Image src={img} alt={`View ${idx}`} fill className="object-cover" />
@@ -153,116 +165,121 @@ export default function ProductPage() {
                             </div>
                         </div>
 
-                        {/* 2. Infos Capitales */}
-                        <div className="space-y-4 border-b border-chocolate/5 pb-8">
-                            <h1 className="text-3xl md:text-5xl font-black text-chocolate tracking-tighter leading-none font-sans italic">
-                                {product.title}
-                            </h1>
+                        <div className="px-4 space-y-12">
+                            {/* 2. Infos Capitales */}
+                            <div className="space-y-6 border-b border-chocolate/5 pb-10">
+                                <h1 className="text-3xl md:text-5xl font-black text-chocolate tracking-tighter leading-none font-sans italic">
+                                    {product.title}
+                                </h1>
 
-                            <div className="flex flex-wrap items-center justify-between gap-6">
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-4xl md:text-5xl font-black text-black tracking-tighter font-sans">
-                                        {product.price.toLocaleString()}
-                                    </span>
-                                    <span className="text-xl font-black text-chocolate/30 uppercase tracking-widest font-sans">
-                                        {product.currency}
-                                    </span>
-                                </div>
-
-                                <div className="flex gap-3">
-                                    <button className="w-14 h-14 flex items-center justify-center bg-[#FAF9F6] border border-chocolate/5 rounded-2xl text-chocolate hover:text-red-500 transition-all shadow-sm active:scale-90">
-                                        <Heart className="w-6 h-6" />
-                                    </button>
-                                    <button className="w-14 h-14 flex items-center justify-center bg-[#FAF9F6] border border-chocolate/5 rounded-2xl text-chocolate transition-all shadow-sm active:scale-90">
-                                        <Share2 className="w-6 h-6" />
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 text-[10px] font-black text-chocolate/40 uppercase tracking-[.3em] font-sans pt-2">
-                                <Calendar className="w-4 h-4" />
-                                <span>Publié il y a 2 Heures</span>
-                            </div>
-                        </div>
-
-                        {/* Mobile Seller Card */}
-                        <div className="lg:hidden">
-                            <SellerCard seller={product.seller} />
-                        </div>
-
-                        {/* 4. Caractéristiques */}
-                        <div className="space-y-8">
-                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
-                                <span className="w-8 h-px bg-chocolate/10"></span>
-                                Caractéristiques
-                            </h3>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                {product.specs?.map((spec, i) => (
-                                    <FeatureItem key={i} label={spec.label} value={spec.value} />
-                                ))}
-                                {!product.specs && (
-                                    <>
-                                        <FeatureItem label="État" value="Très bon" />
-                                        <FeatureItem label="Authenticité" value="Original" />
-                                        <FeatureItem label="Disponibilité" value="En Stock" />
-                                    </>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Description */}
-                        <div className="space-y-6">
-                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
-                                <span className="w-8 h-px bg-chocolate/10"></span>
-                                Description
-                            </h3>
-                            <div className={`relative ${!showFullDesc && 'max-h-60 overflow-hidden'}`}>
-                                <p className="text-chocolate/70 text-[15px] font-medium leading-[1.8] whitespace-pre-line font-sans">
-                                    {product.title} en parfait état. Idéal pour ceux qui recherchent la qualité au meilleur prix.
-
-                                    Détails supplémentaires :
-                                    - Testé et approuvé par nos experts
-                                    - Garantie constructeur incluse
-                                    - Livraison rapide possible dans tout le pays
-                                </p>
-                                {!showFullDesc && (
-                                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent" />
-                                )}
-                            </div>
-                            <button
-                                onClick={() => setShowFullDesc(!showFullDesc)}
-                                className="text-chocolate font-black text-[11px] uppercase tracking-widest border-b-2 border-chocolate/10 pb-1 hover:border-chocolate transition-all"
-                            >
-                                {showFullDesc ? 'Masquer' : 'Lire la description complète'}
-                            </button>
-                        </div>
-
-                        {/* Localisation (Nouveaux champs textuels) */}
-                        <div className="space-y-8">
-                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
-                                <span className="w-8 h-px bg-chocolate/10"></span>
-                                Localisation
-                            </h3>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="bg-[#FAF9F6] p-6 rounded-[2rem] border border-chocolate/5 space-y-4">
-                                    <div className="space-y-1">
-                                        <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Pays</p>
-                                        <p className="text-base font-black text-chocolate italic">RD Congo</p>
+                                <div className="flex flex-wrap items-center justify-between gap-6 pt-2">
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-4xl md:text-5xl font-black text-black tracking-tighter font-sans">
+                                            {product.price.toLocaleString()}
+                                        </span>
+                                        <span className="text-xl font-black text-chocolate/30 uppercase tracking-widest font-sans">
+                                            {product.currency}
+                                        </span>
                                     </div>
-                                    <div className="space-y-1">
-                                        <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Ville / Province</p>
-                                        <p className="text-base font-black text-chocolate italic">{product.location}</p>
+
+                                    <div className="flex gap-2">
+                                        <button className="w-16 h-16 flex items-center justify-center bg-white border border-chocolate/5 rounded-3xl text-chocolate hover:text-red-500 transition-all shadow-sm active:scale-90 overflow-hidden">
+                                            <Heart className="w-6 h-6" />
+                                        </button>
+                                        <button className="w-16 h-16 flex items-center justify-center bg-white border border-chocolate/5 rounded-3xl text-chocolate transition-all shadow-sm active:scale-90">
+                                            <Share2 className="w-6 h-6" />
+                                        </button>
                                     </div>
                                 </div>
 
-                                <div className="bg-[#FAF9F6] p-6 rounded-[2rem] border border-chocolate/5 flex flex-col justify-center">
-                                    <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest mb-2">Adresse détaillée</p>
-                                    <div className="flex items-start gap-3">
-                                        <MapPin className="text-chocolate shrink-0" size={18} />
-                                        <p className="text-sm font-bold text-chocolate/80 leading-relaxed font-sans">
-                                            Commune de la Gombe, Avenue de la Justice, Quartier Royal.
-                                        </p>
+                                <div className="flex items-center gap-2 text-[10px] font-black text-chocolate/40 uppercase tracking-[.4em] font-sans pt-2">
+                                    <Calendar className="w-4 h-4" />
+                                    <span>Publié il y a 2 Heures</span>
+                                </div>
+                            </div>
+
+                            {/* Mobile Seller Section */}
+                            <div className="lg:hidden space-y-4">
+                                <SellerCard seller={product.seller} />
+                                <WhatsAppButton seller={product.seller} />
+                            </div>
+
+                            {/* 4. Caractéristiques */}
+                            <div className="space-y-8">
+                                <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.5em] flex items-center gap-4">
+                                    <span className="w-10 h-px bg-chocolate/10"></span>
+                                    Caractéristiques
+                                </h3>
+                                <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {product.specs?.map((spec, i) => (
+                                        <FeatureItem key={i} label={spec.label} value={spec.value} />
+                                    ))}
+                                    {!product.specs && (
+                                        <>
+                                            <FeatureItem label="État" value="Très bon" />
+                                            <FeatureItem label="Authenticité" value="Original" />
+                                            <FeatureItem label="Disponibilité" value="En Stock" />
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <div className="space-y-8">
+                                <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.5em] flex items-center gap-4">
+                                    <span className="w-10 h-px bg-chocolate/10"></span>
+                                    Description
+                                </h3>
+                                <div className={`relative ${!showFullDesc && 'max-h-60 overflow-hidden'}`}>
+                                    <p className="text-chocolate/70 text-[16px] font-medium leading-[2] whitespace-pre-line font-sans">
+                                        {product.title} en parfait état. Idéal pour ceux qui recherchent la qualité au meilleur prix.
+
+                                        Détails supplémentaires :
+                                        - Testé et approuvé par nos experts
+                                        - Garantie constructeur incluse
+                                        - Livraison rapide possible dans tout le pays
+                                    </p>
+                                    {!showFullDesc && (
+                                        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent" />
+                                    )}
+                                </div>
+                                <button
+                                    onClick={() => setShowFullDesc(!showFullDesc)}
+                                    className="text-chocolate/40 font-black text-[10px] uppercase tracking-[0.3em] border-b-2 border-chocolate/5 pb-2 hover:border-chocolate/20 transition-all"
+                                >
+                                    {showFullDesc ? 'Masquer' : 'Lire la suite'}
+                                </button>
+                            </div>
+
+                            {/* Localisation */}
+                            <div className="space-y-8">
+                                <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.5em] flex items-center gap-4">
+                                    <span className="w-10 h-px bg-chocolate/10"></span>
+                                    Localisation
+                                </h3>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="bg-[#FAF9F6] p-8 rounded-[2.5rem] border border-chocolate/5 space-y-6 shadow-inner">
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Pays</p>
+                                            <p className="text-lg font-black text-chocolate italic tracking-tight">RD Congo</p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Ville / Province</p>
+                                            <p className="text-lg font-black text-chocolate italic tracking-tight">{product.location}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-[#FAF9F6] p-8 rounded-[2.5rem] border border-chocolate/5 flex flex-col justify-center shadow-inner">
+                                        <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest mb-4">Adresse détaillée</p>
+                                        <div className="flex items-start gap-4">
+                                            <div className="p-3 bg-chocolate/5 rounded-2xl">
+                                                <MapPin className="text-chocolate" size={20} />
+                                            </div>
+                                            <p className="text-sm font-bold text-chocolate/80 leading-relaxed font-sans">
+                                                Commune de la Gombe, Avenue de la Justice, Quartier Royal.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -270,22 +287,25 @@ export default function ProductPage() {
                     </div>
 
                     {/* Desktop Sidebar */}
-                    <div className="hidden lg:block lg:col-span-1">
+                    <div className="hidden lg:block lg:col-span-1 px-4">
                         <div className="sticky top-28 space-y-8">
-                            <SellerCard seller={product.seller} />
+                            <div className="space-y-4">
+                                <SellerCard seller={product.seller} />
+                                <WhatsAppButton seller={product.seller} />
+                            </div>
 
-                            <div className="bg-chocolate/5 rounded-[2rem] p-8 border border-chocolate/5">
-                                <h4 className="font-[900] text-sm flex items-center gap-2 mb-6 text-chocolate uppercase tracking-wider">
-                                    <ShieldCheck className="w-6 h-6 text-chocolate" />
-                                    Sécurité BO
+                            <div className="bg-chocolate/5 rounded-[2.5rem] p-10 border border-chocolate/5 space-y-6">
+                                <h4 className="font-black text-[10px] flex items-center gap-3 text-chocolate/40 uppercase tracking-[0.3em]">
+                                    <ShieldCheck className="w-6 h-6 text-chocolate/30" />
+                                    Conseils Sécurité
                                 </h4>
-                                <ul className="space-y-4">
-                                    <li className="flex gap-3 text-xs font-bold text-chocolate/70 leading-relaxed">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-chocolate mt-1.5 shrink-0" />
+                                <ul className="space-y-6">
+                                    <li className="flex gap-4 text-xs font-bold text-chocolate/70 leading-relaxed">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-chocolate/20 mt-1.5 shrink-0" />
                                         Ne payez jamais avant d'avoir examiné le produit.
                                     </li>
-                                    <li className="flex gap-3 text-xs font-bold text-chocolate/70 leading-relaxed">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-chocolate mt-1.5 shrink-0" />
+                                    <li className="flex gap-4 text-xs font-bold text-chocolate/70 leading-relaxed">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-chocolate/20 mt-1.5 shrink-0" />
                                         Privilégiez les lieux publics pour vos rencontres.
                                     </li>
                                 </ul>
@@ -295,7 +315,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Recommandations */}
-                <div className="mt-24 border-t border-gray-100 pt-16 pb-20">
+                <div className="mt-24 border-t border-gray-100 pt-16 pb-20 px-4">
                     <h2 className="text-3xl font-[900] text-black tracking-tighter uppercase mb-10 flex items-center gap-4">
                         <Zap className="w-10 h-10 fill-chocolate text-chocolate" />
                         Offres similaires
