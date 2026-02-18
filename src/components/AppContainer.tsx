@@ -16,7 +16,7 @@ interface AppContainerProps {
  */
 export default function AppContainer({ children, className = '' }: AppContainerProps) {
     return (
-        <div className={`min-h-screen bg-white pb-32 ${className}`}>
+        <div className={`min-h-screen ${className}`}>
             {children}
         </div>
     );

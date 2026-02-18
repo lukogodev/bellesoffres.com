@@ -3,15 +3,20 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-    ArrowLeft,
     Globe,
     Moon,
     Sun,
     ShieldCheck,
     Info,
     ChevronRight,
-    LogOut
+    LogOut,
+    Bell,
+    Lock,
+    Scale
 } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
+import AppContainer from '@/components/AppContainer';
+import BottomNav from '@/components/BottomNav';
 import Link from 'next/link';
 
 export default function SettingsPage() {
@@ -22,90 +27,96 @@ export default function SettingsPage() {
     const toggleDarkMode = () => setDarkMode(!darkMode);
     const toggleLanguage = () => setLanguage(language === 'fr' ? 'en' : 'fr');
 
+    const SettingItem = ({ icon: Icon, label, value, href, onClick, color = "bg-beige/30", textColor = "text-chocolate" }: any) => {
+        const Content = (
+            <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-chocolate/5 hover:bg-beige/10 transition-all group active:scale-[0.98]">
+                <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 ${color} ${textColor} rounded-xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
+                        <Icon size={20} />
+                    </div>
+                    <span className="font-black text-sm uppercase tracking-tight text-black">{label}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    {value && <span className="text-xs font-bold text-gray-400">{value}</span>}
+                    <ChevronRight size={18} className="text-gray-300" />
+                </div>
+            </div>
+        );
+
+        if (href) return <Link href={href} className="block">{Content}</Link>;
+        return <button onClick={onClick} className="w-full text-left">{Content}</button>;
+    };
+
     return (
-        <div className={`min-h-screen ${darkMode ? 'dark bg-black text-white' : 'bg-white text-black'} pb-24 transition-colors`}>
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 px-4 py-4 flex items-center gap-4">
-                <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
-                    <ArrowLeft className="w-5 h-5 text-black dark:text-white" />
-                </button>
-                <h1 className="text-lg font-bold">Paramètres Généraux</h1>
-            </div>
+        <AppContainer className="bg-gray-50">
+            <PageHeader variant="page" title="Paramètres" />
 
-            <div className="p-4 space-y-6">
+            <main className="max-w-[1280px] mx-auto px-4 py-8">
+                <div className="space-y-8">
+                    {/* Section Préférences */}
+                    <div className="space-y-4">
+                        <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] px-2">Préférences</h3>
+                        <div className="space-y-3">
+                            <SettingItem
+                                icon={darkMode ? Moon : Sun}
+                                label="Mode Nuit"
+                                value={darkMode ? "Activé" : "Désactivé"}
+                                onClick={toggleDarkMode}
+                            />
+                            <SettingItem
+                                icon={Globe}
+                                label="Langue de l'App"
+                                value={language === 'fr' ? "Français" : "English"}
+                                onClick={toggleLanguage}
+                            />
+                            <SettingItem
+                                icon={Bell}
+                                label="Notifications"
+                                value="Toutes"
+                                href="/notifications"
+                            />
+                        </div>
+                    </div>
 
-                {/* Preferences */}
-                <div className="space-y-1">
-                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide px-2 mb-2">Préférences</h3>
+                    {/* Section Sécurité & Légal */}
+                    <div className="space-y-4">
+                        <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] px-2">Sécurité & Légal</h3>
+                        <div className="space-y-3">
+                            <SettingItem
+                                icon={Lock}
+                                label="Confidentialité"
+                                href="/policy"
+                            />
+                            <SettingItem
+                                icon={Scale}
+                                label="Mentions Légales"
+                                href="/legal"
+                            />
+                            <SettingItem
+                                icon={Info}
+                                label="À Propos"
+                                href="/about"
+                            />
+                        </div>
+                    </div>
 
-                    {/* Theme Toggle */}
-                    <button
-                        onClick={toggleDarkMode}
-                        className="w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center">
-                                {darkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-                            </div>
-                            <span className="font-medium text-sm">Thème</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400">{darkMode ? 'Sombre' : 'Clair'}</span>
-                            <div className={`w-10 h-6 flex items-center rounded-full p-1 duration-300 ${darkMode ? 'bg-chocolate justify-end' : 'bg-gray-300 justify-start'}`}>
-                                <div className="bg-white w-4 h-4 rounded-full shadow-md"></div>
-                            </div>
-                        </div>
-                    </button>
+                    {/* Section Compte */}
+                    <div className="space-y-4 pt-4">
+                        <button className="w-full flex items-center justify-center gap-3 p-5 bg-red-50 text-red-500 rounded-3xl border-2 border-red-100 font-black uppercase tracking-widest text-sm hover:bg-red-500 hover:text-white transition-all active:scale-95 shadow-lg shadow-red-100">
+                            <LogOut size={20} />
+                            Se Déconnecter
+                        </button>
+                    </div>
 
-                    {/* Language Toggle */}
-                    <button
-                        onClick={toggleLanguage}
-                        className="w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-                                <Globe className="w-4 h-4" />
-                            </div>
-                            <span className="font-medium text-sm">Langue</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400">{language === 'fr' ? 'Français' : 'English'}</span>
-                            <ChevronRight className="w-4 h-4 text-gray-400" />
-                        </div>
-                    </button>
+                    {/* App Version Info */}
+                    <div className="text-center pt-8 space-y-1">
+                        <p className="text-[10px] font-black text-chocolate/20 uppercase tracking-[0.3em]">Belles Offres v1.0.0</p>
+                        <p className="text-[9px] font-bold text-gray-300">Made with ❤️ for Africa</p>
+                    </div>
                 </div>
+            </main>
 
-                {/* Legal & About */}
-                <div className="space-y-1">
-                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide px-2 mb-2">Légal</h3>
-
-                    <Link href="/policy" className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
-                                <ShieldCheck className="w-4 h-4" />
-                            </div>
-                            <span className="font-medium text-sm">Politique de confidentialité</span>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-gray-400" />
-                    </Link>
-
-                    <Link href="/about" className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
-                                <Info className="w-4 h-4" />
-                            </div>
-                            <span className="font-medium text-sm">À Propos</span>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-gray-400" />
-                    </Link>
-                </div>
-
-                {/* App Version */}
-                <div className="text-center pt-8">
-                    <p className="text-xs text-gray-400 font-medium">Belles Offres v1.0.0</p>
-                    <p className="text-[10px] text-gray-300 mt-1">Made with ❤️ in Africa</p>
-                </div>
-            </div>
-        </div>
+            <BottomNav />
+        </AppContainer>
     );
 }

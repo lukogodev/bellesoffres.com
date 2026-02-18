@@ -36,30 +36,32 @@ export default function CategoryBar() {
     };
 
     return (
-        <div className="w-full overflow-x-auto no-scrollbar py-4 pl-4 space-x-4 flex items-start">
-            {categories.map((cat) => {
-                const isSelected = selected === cat.id;
-                const Icon = cat.icon;
+        <div className="w-full bg-chocolate flex justify-center border-b border-beige/5">
+            <div className="w-full max-w-6xl overflow-x-auto no-scrollbar py-4 px-4 space-x-6 flex items-start bg-chocolate">
+                {categories.map((cat) => {
+                    const isSelected = selected === cat.id;
+                    const Icon = cat.icon;
 
-                return (
-                    <button
-                        key={cat.id}
-                        onClick={() => handleCategoryClick(cat.id)}
-                        className="flex flex-col items-center gap-2 min-w-[64px] group"
-                    >
-                        <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm border border-chocolate/5 ${isSelected
-                                ? 'bg-chocolate text-beige shadow-chocolate/30 scale-110'
-                                : 'bg-beige text-chocolate group-hover:bg-chocolate/10'
-                            }`}>
-                            <Icon className="w-6 h-6 stroke-[1.5]" />
-                        </div>
-                        <span className={`text-[10px] font-bold tracking-wide transition-colors ${isSelected ? 'text-chocolate' : 'text-gray-500'
-                            }`}>
-                            {cat.label}
-                        </span>
-                    </button>
-                );
-            })}
+                    return (
+                        <button
+                            key={cat.id}
+                            onClick={() => handleCategoryClick(cat.id)}
+                            className="flex flex-col items-center gap-2 min-w-[70px] group transition-all"
+                        >
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${isSelected
+                                    ? 'bg-beige text-chocolate shadow-lg shadow-black/20 scale-105'
+                                    : 'bg-beige/10 text-beige/60 group-hover:bg-beige/20 group-hover:text-beige'
+                                }`}>
+                                <Icon className="w-5 h-5 stroke-[2]" />
+                            </div>
+                            <span className={`text-[9px] font-black tracking-widest uppercase transition-colors ${isSelected ? 'text-beige' : 'text-beige/40 group-hover:text-beige/60'
+                                }`}>
+                                {cat.label}
+                            </span>
+                        </button>
+                    );
+                })}
+            </div>
 
             {/* Simple Modal for "Coming Soon" */}
             {showModal && (

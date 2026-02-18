@@ -34,49 +34,45 @@ export default function VideoFeedPage() {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     const [likedVideos, setLikedVideos] = useState<Set<string>>(new Set());
-    const [expandedDescriptions, setExpandedDescriptions] = useState<Set<string>>(new Set());
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-    // Vidéos mockées
+    // Vidéos mockées pour la démo
     const videos: Video[] = [
         {
             id: "1",
             videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-            thumbnail: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&q=80&w=400",
-            productName: "iPhone 13 Pro Max 256GB",
+            thumbnail: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=400",
+            productName: "iPhone 13 Pro Max",
             price: 850000,
             currency: "FCFA",
-            description: "iPhone 13 Pro Max neuf, jamais utilisé. Capacité 256GB, couleur Sierra Blue. Boîte scellée avec tous les accessoires d'origine.",
+            description: "Neuf, scellé. 256GB.",
             seller: {
                 name: "TechStore",
-                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200",
                 shopId: "shop-1"
             },
             likes: 234,
-            location: "Kinshasa, Gombe"
+            location: "Gombe, Kinshasa"
         },
         {
             id: "2",
             videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-            thumbnail: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=400",
+            thumbnail: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=400",
             productName: "Sac Gucci Original",
             price: 450000,
             currency: "FCFA",
-            description: "Sac à main Gucci authentique, état neuf. Livré avec certificat d'authenticité et boîte d'origine.",
+            description: "Authentique, certificat fourni.",
             seller: {
                 name: "LuxuryShop",
-                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200",
                 shopId: "shop-2"
             },
             likes: 567,
-            location: "Kinshasa, Lemba"
+            location: "Lemba, Kinshasa"
         }
     ];
 
-    const currentVideo = videos[currentVideoIndex];
-
-    // Gestion du scroll pour changer de vidéo
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const container = e.currentTarget;
         const scrollPosition = container.scrollTop;
@@ -88,73 +84,55 @@ export default function VideoFeedPage() {
         }
     };
 
-    // Auto-play de la vidéo courante
     useEffect(() => {
         const currentVideoRef = videoRefs.current[currentVideoIndex];
         if (currentVideoRef) {
-            // Pause toutes les autres vidéos
             videoRefs.current.forEach((ref, index) => {
-                if (ref && index !== currentVideoIndex) {
-                    ref.pause();
-                }
+                if (ref && index !== currentVideoIndex) ref.pause();
             });
-            // Play vidéo courante
             currentVideoRef.play().catch(() => { });
         }
     }, [currentVideoIndex]);
 
     const toggleLike = (videoId: string) => {
         const newLiked = new Set(likedVideos);
-        if (newLiked.has(videoId)) {
-            newLiked.delete(videoId);
-        } else {
-            newLiked.add(videoId);
-        }
+        if (newLiked.has(videoId)) newLiked.delete(videoId);
+        else newLiked.add(videoId);
         setLikedVideos(newLiked);
     };
 
-    const toggleDescription = (videoId: string) => {
-        const newExpanded = new Set(expandedDescriptions);
-        if (newExpanded.has(videoId)) {
-            newExpanded.delete(videoId);
-        } else {
-            newExpanded.add(videoId);
-        }
-        setExpandedDescriptions(newExpanded);
-    };
-
     return (
-        <div className="fixed inset-0 bg-black">
-            {/* Header */}
-            <div className="absolute top-0 left-0 right-0 p-4 flex items-center justify-between z-50 bg-gradient-to-b from-black/60 to-transparent">
+        <div className="fixed inset-0 bg-black overflow-hidden">
+            {/* Minimal Header */}
+            <div className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between z-50">
                 <button
                     onClick={() => router.push('/')}
-                    className="p-2 bg-black/30 backdrop-blur-sm rounded-full text-white active:scale-90 transition-transform"
+                    className="w-12 h-12 bg-chocolate/20 backdrop-blur-xl rounded-full flex items-center justify-center text-beige active:scale-90 transition-all border border-white/10"
                 >
-                    <Home size={24} />
+                    <ArrowLeft size={24} />
                 </button>
-                <h1 className="text-white font-black text-lg drop-shadow-lg">Vidéos</h1>
+                <div className="px-4 py-2 bg-chocolate/20 backdrop-blur-xl rounded-full border border-white/10">
+                    <span className="text-white text-[10px] font-black uppercase tracking-[0.3em]">EN DIRECT</span>
+                </div>
                 <button
                     onClick={() => setIsMuted(!isMuted)}
-                    className="p-2 bg-black/30 backdrop-blur-sm rounded-full text-white active:scale-90 transition-transform"
+                    className="w-12 h-12 bg-chocolate/20 backdrop-blur-xl rounded-full flex items-center justify-center text-beige active:scale-90 transition-all border border-white/10"
                 >
                     {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
                 </button>
             </div>
 
-            {/* Container de scroll vertical */}
+            {/* Vertical Video Container */}
             <div
                 ref={containerRef}
-                className="h-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+                className="h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar"
                 onScroll={handleScroll}
-                style={{ scrollBehavior: 'smooth' }}
             >
                 {videos.map((video, index) => (
                     <div
                         key={video.id}
-                        className="w-full h-screen snap-start snap-always relative flex items-center justify-center bg-black"
+                        className="w-full h-full snap-start relative flex items-center justify-center bg-black"
                     >
-                        {/* Vidéo */}
                         <video
                             ref={(el) => { videoRefs.current[index] = el; }}
                             src={video.videoUrl}
@@ -162,108 +140,78 @@ export default function VideoFeedPage() {
                             playsInline
                             loop
                             muted={isMuted}
-                            style={{ aspectRatio: '9/16' }}
                         />
 
-                        {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 pointer-events-none" />
+                        {/* Shadows for UI readability */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none" />
 
-                        {/* Boutons d'action à droite */}
-                        <div className="absolute right-4 bottom-32 flex flex-col gap-6 z-30">
-                            {/* Photo de profil */}
-                            <button
-                                onClick={() => router.push(`/shop/${video.seller.shopId}`)}
-                                className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden active:scale-90 transition-transform"
-                            >
-                                <Image
-                                    src={video.seller.avatar}
-                                    alt={video.seller.name}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </button>
-
-                            {/* Like */}
+                        {/* Side Actions (Floating) */}
+                        <div className="absolute right-6 bottom-40 flex flex-col gap-8 z-30">
                             <button
                                 onClick={() => toggleLike(video.id)}
-                                className="flex flex-col items-center gap-1 active:scale-90 transition-transform"
+                                className="flex flex-col items-center gap-2 group"
                             >
-                                <Heart
-                                    size={32}
-                                    className={`${likedVideos.has(video.id) ? 'fill-red-500 text-red-500' : 'text-white'} drop-shadow-lg`}
-                                />
-                                <span className="text-white text-xs font-bold drop-shadow-lg">
-                                    {(video.likes + (likedVideos.has(video.id) ? 1 : 0)).toLocaleString()}
+                                <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${likedVideos.has(video.id) ? 'bg-red-500 shadow-lg shadow-red-500/50' : 'bg-white/10 backdrop-blur-md group-hover:bg-white/20'}`}>
+                                    <Heart
+                                        size={28}
+                                        className={`${likedVideos.has(video.id) ? 'fill-white text-white' : 'text-white'}`}
+                                    />
+                                </div>
+                                <span className="text-white text-[10px] font-black tracking-widest uppercase">
+                                    {(video.likes + (likedVideos.has(video.id) ? 1 : 0))}
                                 </span>
                             </button>
 
-                            {/* WhatsApp */}
-                            <button
-                                onClick={() => window.open(`https://wa.me/`, '_blank')}
-                                className="flex flex-col items-center gap-1 active:scale-90 transition-transform"
-                            >
-                                <div className="w-12 h-12 bg-whatsapp rounded-full flex items-center justify-center shadow-lg">
-                                    <WhatsAppIcon />
+                            <button className="flex flex-col items-center gap-2 group">
+                                <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all">
+                                    <Share2 size={28} className="text-white" />
                                 </div>
+                                <span className="text-white text-[10px] font-black tracking-widest uppercase">Partager</span>
                             </button>
 
-                            {/* Partager */}
-                            <button className="flex flex-col items-center gap-1 active:scale-90 transition-transform">
-                                <Share2 size={32} className="text-white drop-shadow-lg" />
-                            </button>
+                            <a
+                                href={`https://wa.me/`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-14 h-14 bg-whatsapp shadow-lg shadow-green-500/50 rounded-full flex items-center justify-center active:scale-95 transition-all animate-bounce"
+                            >
+                                <WhatsAppIcon />
+                            </a>
                         </div>
 
-                        {/* Informations en bas */}
-                        <div className="absolute bottom-4 left-4 right-20 z-30 text-white space-y-3">
-                            {/* Nom boutique */}
-                            <button
-                                onClick={() => router.push(`/shop/${video.seller.shopId}`)}
-                                className="flex items-center gap-2 active:scale-95 transition-transform"
-                            >
-                                <h3 className="font-black text-base drop-shadow-lg">
-                                    @{video.seller.name}
-                                </h3>
-                            </button>
-
-                            {/* Description */}
-                            <div className="space-y-1">
-                                <p className="text-sm font-medium drop-shadow-lg leading-relaxed">
-                                    {expandedDescriptions.has(video.id)
-                                        ? video.description
-                                        : video.description.substring(0, 80) + '...'
-                                    }
-                                </p>
-                                {!expandedDescriptions.has(video.id) && (
-                                    <button
-                                        onClick={() => toggleDescription(video.id)}
-                                        className="text-sm font-bold text-beige underline drop-shadow-lg"
-                                    >
-                                        Voir plus
-                                    </button>
-                                )}
+                        {/* Bottom Info Overlay */}
+                        <div className="absolute bottom-10 left-6 right-24 z-30 space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full border-2 border-beige overflow-hidden">
+                                    <img src={video.seller.avatar} alt="" className="w-full h-full object-cover" />
+                                </div>
+                                <h3 className="text-white font-black text-sm tracking-wide">@{video.seller.name.toLowerCase()}</h3>
                             </div>
 
-                            {/* Prix */}
-                            <div className="flex items-baseline gap-2 drop-shadow-lg">
-                                <span className="text-2xl font-black text-beige">
+                            <div className="space-y-1">
+                                <h2 className="text-beige font-black text-2xl tracking-tighter uppercase leading-none">{video.productName}</h2>
+                                <p className="text-white/80 text-xs font-medium line-clamp-2">{video.description}</p>
+                            </div>
+
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-3xl font-black text-white font-sans tracking-tight">
                                     {video.price.toLocaleString()}
                                 </span>
-                                <span className="text-sm font-bold text-beige/90">
+                                <span className="text-xs font-black text-beige/80 uppercase tracking-widest">
                                     {video.currency}
                                 </span>
                             </div>
 
-                            {/* Localisation */}
-                            <div className="text-xs font-bold text-white/90 drop-shadow-lg">
-                                📍 {video.location}
+                            <div className="flex items-center gap-2 text-[10px] font-black text-white/60 uppercase tracking-widest">
+                                <MapPin size={12} className="text-beige" />
+                                {video.location}
                             </div>
 
-                            {/* Bouton VOIR L'ANNONCE */}
                             <button
                                 onClick={() => router.push(`/product/${video.id}`)}
-                                className="w-full py-3 bg-whatsapp hover:bg-[#1ebc57] text-white rounded-xl font-black text-xs uppercase tracking-wider shadow-lg active:scale-95 transition-all mt-2"
+                                className="w-full py-4 px-6 bg-white text-chocolate rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl hover:bg-beige transition-all active:scale-95 flex items-center justify-center gap-3"
                             >
-                                VOIR L'ANNONCE
+                                Voir l'annonce complète
                             </button>
                         </div>
                     </div>
@@ -271,13 +219,8 @@ export default function VideoFeedPage() {
             </div>
 
             <style jsx global>{`
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
         </div>
     );

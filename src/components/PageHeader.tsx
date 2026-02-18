@@ -1,19 +1,14 @@
 'use client';
 
-import { ArrowLeft, Heart, Menu } from 'lucide-react';
+import { ArrowLeft, Menu, Heart, Play, Plus, User } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
 interface PageHeaderProps {
-    /** Type de header: 'home' pour l'accueil, 'page' pour les autres pages */
     variant?: 'home' | 'page';
-    /** Titre de la page (utilisé pour variant='page') */
     title?: string;
-    /** Icône optionnelle à afficher à côté du titre */
     icon?: ReactNode;
-    /** Actions/boutons personnalisés à droite du header */
     rightContent?: ReactNode;
-    /** URL de retour (par défaut '/') */
     backUrl?: string;
 }
 
@@ -25,46 +20,62 @@ export default function PageHeader({
     backUrl = '/'
 }: PageHeaderProps) {
     if (variant === 'home') {
-        // Header de la page d'accueil (Belles Offres)
         return (
-            <header className="w-full sticky top-0 z-50 bg-chocolate shadow-xl">
-                <div className="max-w-[1280px] mx-auto px-4 py-4 flex justify-between items-center">
-                    <h1 className="text-2xl font-[900] text-beige tracking-tighter uppercase leading-none">
-                        Belles Offres
-                    </h1>
+            <header className="w-full sticky top-0 z-[60] bg-chocolate flex justify-center shadow-md">
+                <div className="w-full max-w-6xl px-4 py-4 flex justify-between items-center bg-chocolate text-beige">
+                    {/* Mobile: Menu icon left */}
+                    <button className="md:hidden p-2 hover:bg-beige/10 rounded-full transition-all">
+                        <Menu size={24} />
+                    </button>
 
-                    <div className="flex items-center gap-6">
-                        <Link href="/favorites" className="relative group">
-                            <Heart className="w-6 h-6 text-beige transition-transform active:scale-75" />
-                            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-chocolate"></span>
-                        </Link>
-                        <button className="text-beige active:scale-75 transition-transform">
-                            <Menu className="w-7 h-7" />
-                        </button>
+                    {/* Logo: Centered on mobile, Left on desktop */}
+                    <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+                        <h1 className="text-xl md:text-2xl font-[900] tracking-[0.1em] uppercase leading-none italic">
+                            Belles Offres
+                        </h1>
                     </div>
+
+                    {/* Desktop: Actions right */}
+                    <div className="hidden md:flex items-center gap-6">
+                        <Link href="/publish" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
+                            <Plus size={18} />
+                            Vendre
+                        </Link>
+                        <Link href="/favorites" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
+                            <Heart size={18} />
+                            Favoris
+                        </Link>
+                        <Link href="/feed" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
+                            <Play size={18} />
+                            Vidéos
+                        </Link>
+                        <Link href="/profile" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-white transition-colors">
+                            <User size={18} />
+                            Profil
+                        </Link>
+                    </div>
+
+                    {/* Mobile Spacer (to keep logo centered) */}
+                    <div className="w-10 md:hidden" />
                 </div>
             </header>
         );
     }
 
-    // Header standard pour toutes les autres pages
     return (
-        <header className="w-full sticky top-0 z-50 bg-chocolate shadow-xl">
-            <div className="max-w-[1280px] mx-auto px-4 py-4 flex items-center justify-between">
-                {/* Bouton Retour */}
-                <Link href={backUrl} className="text-beige p-1 transition-transform active:scale-75">
-                    <ArrowLeft size={28} strokeWidth={2.5} />
+        <header className="w-full sticky top-0 z-[60] bg-chocolate flex justify-center border-b border-beige/10">
+            <div className="w-full max-w-6xl px-4 py-3 flex items-center justify-between bg-chocolate text-beige">
+                <Link href={backUrl} className="text-beige p-2 hover:bg-beige/10 rounded-full transition-all shrink-0">
+                    <ArrowLeft size={20} strokeWidth={3} />
                 </Link>
 
-                {/* Titre au centre */}
-                <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl font-[900] text-beige tracking-tighter uppercase flex items-center gap-2">
+                <h1 className="text-sm font-black tracking-[0.1em] uppercase flex items-center gap-2 truncate px-4">
                     {icon && <span className="flex items-center">{icon}</span>}
-                    <span className="truncate max-w-[200px]">{title}</span>
+                    <span className="truncate">{title}</span>
                 </h1>
 
-                {/* Contenu de droite (optionnel) */}
-                <div className="text-beige">
-                    {rightContent || <div className="w-10" />} {/* Spacer pour équilibrer si pas de contenu */}
+                <div className="flex items-center justify-end min-w-[40px] shrink-0">
+                    {rightContent || <div className="w-4" />}
                 </div>
             </div>
         </header>

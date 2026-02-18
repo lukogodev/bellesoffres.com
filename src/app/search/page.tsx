@@ -1,111 +1,127 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Search, Filter, MapPin, Tag } from 'lucide-react';
+import { Search, Filter, SlidersHorizontal, MapPin, Zap, ArrowLeft, X } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
+import PageHeader from '@/components/PageHeader';
+import AppContainer from '@/components/AppContainer';
+import ListingCard from '@/components/ListingCard';
+import SearchFilter, { FilterValues } from '@/components/SearchFilter';
+import data from '@/mock/data.json';
+import { Product } from '@/types';
 
 export default function SearchPage() {
     const router = useRouter();
-    const [priceRange, setPriceRange] = useState([0, 1000000]);
-    const [category, setCategory] = useState('');
-    const [location, setLocation] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [results, setResults] = useState<Product[]>([]);
+    const [activeFilters, setActiveFilters] = useState<FilterValues | null>(null);
 
-    const handleSearch = () => {
-        // Logic to filter products
-        // For mock, just go back to home or show results
-        router.push('/?search=true');
+    useEffect(() => {
+        // Initial search results
+        setResults(data.products as Product[]);
+    }, []);
+
+    const handleFilterApply = (filters: FilterValues) => {
+        setActiveFilters(filters);
+        // Ici on filtrerait normalement les donnees
+        console.log('Filtres appliqués:', filters);
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black pb-24">
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-100 dark:border-gray-800 px-4 py-4 flex items-center gap-4">
-                <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
-                    <ArrowLeft className="w-5 h-5 text-black dark:text-white" />
-                </button>
-                <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
-                    <input
-                        type="text"
-                        placeholder="Rechercher un produit..."
-                        className="w-full pl-9 pr-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-chocolate"
-                        autoFocus
-                    />
+        <AppContainer>
+            {/* Header avec barre de recherche intégrée */}
+            <div className="sticky top-0 z-[60] bg-chocolate pb-6">
+                <div className="max-w-[1280px] mx-auto px-4 pt-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2 text-beige hover:bg-beige/10 rounded-full transition-colors"
+                        >
+                            <ArrowLeft size={24} />
+                        </button>
+                        <div className="flex-1 relative group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-chocolate/30 w-5 h-5" />
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Que cherchez-vous ?"
+                                className="w-full pl-12 pr-12 py-4 bg-white rounded-2xl text-[14px] font-bold text-chocolate placeholder:text-chocolate/20 focus:outline-none focus:ring-4 focus:ring-beige/30 transition-all shadow-inner"
+                                autoFocus
+                            />
+                            {searchQuery && (
+                                <button
+                                    onClick={() => setSearchQuery('')}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-chocolate/30 hover:text-chocolate"
+                                >
+                                    <X size={20} />
+                                </button>
+                            )}
+                        </div>
+                        <button
+                            onClick={() => setIsFilterOpen(true)}
+                            className={`p-4 rounded-2xl border backdrop-blur-md transition-all active:scale-90 ${activeFilters
+                                    ? 'bg-beige text-chocolate border-beige'
+                                    : 'bg-beige/10 text-beige border-beige/20'
+                                }`}
+                        >
+                            <SlidersHorizontal className="w-6 h-6" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="p-4 space-y-8">
-                <div className="flex items-center gap-2 mb-4">
-                    <Filter className="w-5 h-5 text-chocolate" />
-                    <h2 className="font-bold text-lg">Filtres</h2>
+            <main className="max-w-[1280px] mx-auto px-4 py-8">
+                {/* Status bar */}
+                <div className="flex items-center justify-between mb-8">
+                    <div className="space-y-1">
+                        <h2 className="text-xl font-[900] text-chocolate uppercase tracking-tight">
+                            Résultats de recherche
+                        </h2>
+                        {activeFilters && (
+                            <p className="text-[10px] font-black text-chocolate/40 uppercase tracking-widest">
+                                Filtres : {activeFilters.category || 'Toutes catégories'} • {activeFilters.city || activeFilters.country}
+                            </p>
+                        )}
+                    </div>
+                    <div className="bg-beige text-chocolate px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase">
+                        {results.length} ARTICLES
+                    </div>
                 </div>
 
-                {/* Category Filter */}
-                <div>
-                    <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Catégorie</label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Tout', 'Mode', 'Électronique', 'Maison', 'Véhicules', 'Services'].map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setCategory(cat)}
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${category === cat
-                                        ? 'bg-chocolate text-white border-chocolate'
-                                        : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700'
-                                    }`}
-                            >
-                                {cat}
-                            </button>
+                {/* Grid */}
+                {results.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        {results.map((product) => (
+                            <ListingCard key={product.id} product={product} />
                         ))}
                     </div>
-                </div>
-
-                {/* Price Range */}
-                <div>
-                    <label className="block text-xs font-bold text-gray-500 mb-4 uppercase tracking-wide">Prix (FCFA)</label>
-                    <div className="px-2">
-                        <input
-                            type="range"
-                            min="0"
-                            max="1000000"
-                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-chocolate"
-                        />
-                        <div className="flex justify-between mt-2 text-sm font-bold text-gray-700 dark:text-gray-300">
-                            <span>0 FCFA</span>
-                            <span>1 000 000+ FCFA</span>
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+                        <div className="w-20 h-20 bg-beige rounded-full flex items-center justify-center">
+                            <Search className="w-10 h-10 text-chocolate opacity-20" />
                         </div>
-                    </div>
-                </div>
-
-                {/* Location Filter */}
-                <div>
-                    <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Localisation</label>
-                    <div className="relative">
-                        <MapPin className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
-                        <select
-                            className="w-full p-3 pl-10 bg-gray-50 dark:bg-gray-900 rounded-xl border-none focus:ring-2 focus:ring-chocolate transition-all font-medium appearance-none"
-                            onChange={(e) => setLocation(e.target.value)}
+                        <h3 className="text-lg font-black text-chocolate uppercase">Aucun résultat trouvé</h3>
+                        <p className="text-gray-400 font-medium text-sm">Essayez de modifier vos filtres ou votre recherche.</p>
+                        <button
+                            onClick={() => { setActiveFilters(null); setSearchQuery(''); }}
+                            className="text-chocolate font-black text-xs uppercase tracking-widest underline decoration-2 underline-offset-4"
                         >
-                            <option value="">Partout</option>
-                            <option value="Abidjan">Abidjan</option>
-                            <option value="Dakar">Dakar</option>
-                            <option value="Lomé">Lomé</option>
-                            <option value="Cotonou">Cotonou</option>
-                            <option value="Bamako">Bamako</option>
-                        </select>
+                            Réinitialiser tout
+                        </button>
                     </div>
-                </div>
-            </div>
+                )}
+            </main>
 
-            {/* Bottom Action */}
-            <div className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-black border-t border-gray-100 dark:border-gray-800">
-                <button
-                    onClick={handleSearch}
-                    className="w-full py-3.5 bg-chocolate text-white font-bold rounded-xl shadow-lg hover:bg-[#b05515] transition-colors"
-                >
-                    Afficher les résultats (124)
-                </button>
-            </div>
-        </div>
+            <SearchFilter
+                isOpen={isFilterOpen}
+                onClose={() => setIsFilterOpen(false)}
+                onApply={handleFilterApply}
+            />
+
+            <BottomNav />
+        </AppContainer>
     );
 }

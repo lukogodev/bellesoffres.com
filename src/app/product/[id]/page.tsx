@@ -60,79 +60,80 @@ export default function ProductPage() {
 
     function SellerCard({ seller }: { seller: Product['seller'] }) {
         return (
-            <div className="bg-white border-[0.5px] border-chocolate/20 rounded-[2.5rem] p-8 shadow-xl">
+            <div className="bg-[#FAF9F6] border border-chocolate/5 rounded-[2.5rem] p-8 shadow-sm">
                 <div className="flex items-start gap-5">
                     <div className="w-20 h-20 rounded-full bg-white border-[4px] border-beige overflow-hidden shadow-md shrink-0">
-                        <div className="w-full h-full bg-gray-100 flex items-center justify-center text-2xl font-black text-chocolate">
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center text-2xl font-black text-chocolate font-sans">
                             {seller.name.charAt(0)}
                         </div>
                     </div>
                     <div className="flex-1">
-                        <h3 className="font-black text-xl text-black tracking-tight">{seller.name}</h3>
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Vendeur Vérifié</p>
+                        <h3 className="font-black text-xl text-chocolate tracking-tight font-sans italic">{seller.name}</h3>
+
+                        {/* Système d'avis étoilés */}
+                        <div className="flex items-center gap-1.5 mt-1 mb-4">
+                            <div className="flex text-yellow-500 scale-90 -ml-1">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span key={star} className="text-lg">★</span>
+                                ))}
+                            </div>
+                            <span className="text-[11px] font-black text-chocolate/40 uppercase tracking-widest">(4.8 • 12 avis)</span>
+                        </div>
 
                         <a
                             href={`https://wa.me/${seller.whatsapp.replace(/\D/g, '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full bg-whatsapp hover:bg-[#1ebc57] text-white font-black py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-green-200 transition-all active:scale-95 mb-4"
+                            className="w-full bg-whatsapp hover:bg-[#1ebc57] text-white font-black py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-green-200/50 transition-all active:scale-95 mb-4"
                         >
                             <WhatsAppIcon />
-                            <span className="text-sm uppercase tracking-wider">Discuter sur WhatsApp</span>
+                            <span className="text-sm uppercase tracking-widest">Contacter</span>
                         </a>
-
-                        <div className="flex items-center gap-1 text-yellow-500 text-xs font-black">
-                            ★★★★★
-                            <span className="text-gray-400 font-bold ml-1 text-[10px]">(12 avis)</span>
-                        </div>
                     </div>
                 </div>
-                <p className="text-[10px] text-center text-gray-400 mt-4 px-4 border-t border-gray-50 pt-4 font-bold">
-                    Répond généralement en moins de 15 minutes.
-                </p>
             </div>
         );
     }
 
     function FeatureItem({ label, value }: { label: string, value: string }) {
         return (
-            <div className="flex flex-col gap-1 items-start p-4 bg-beige rounded-2xl border border-chocolate/20 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
-                <span className="text-[9px] font-[900] text-chocolate uppercase tracking-widest">{label}</span>
-                <span className="text-[13px] font-black text-black leading-tight">{value}</span>
+            <div className="flex flex-col gap-1 items-start p-4 bg-beige/40 rounded-2xl border border-chocolate/5 group hover:bg-beige/60 transition-all">
+                <span className="text-[9px] font-black text-chocolate/50 uppercase tracking-[0.2em]">{label}</span>
+                <span className="text-[13px] font-black text-chocolate leading-tight">{value}</span>
             </div>
         );
     }
 
     return (
-        <AppContainer>
+        <AppContainer className="bg-white">
             {/* Header Product Page */}
             <PageHeader
                 variant="page"
-                title="Détails"
+                title="Détails de l'offre"
                 rightContent={
-                    <button className="text-beige p-1 transition-transform active:scale-75">
-                        <Share2 size={24} />
+                    <button className="text-beige p-2 hover:bg-beige/10 rounded-full transition-all">
+                        <Share2 size={20} />
                     </button>
                 }
             />
 
-            <main className="max-w-[1280px] mx-auto px-4 py-8">
+            <main className="max-w-[1280px] mx-auto px-4 py-8 pb-32">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-                    <div className="lg:col-span-2 space-y-10">
+                    <div className="lg:col-span-2 space-y-12">
                         {/* 1. Galerie Média */}
                         <div className="space-y-4">
-                            <div className="relative aspect-video w-full bg-gray-50 rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-inner">
+                            <div className="relative aspect-[4/3] md:aspect-video w-full bg-[#FAF9F6] rounded-[2.5rem] overflow-hidden border border-chocolate/5 shadow-inner">
                                 <Image
                                     src={gallery[activeImage] || product.image}
                                     alt={product.title}
                                     fill
-                                    className="object-contain p-4 transition-all duration-700"
+                                    className="object-contain p-4 md:p-8 transition-all duration-700"
                                 />
                                 {activeImage === 2 && (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/5">
-                                        <div className="w-20 h-20 bg-white/40 backdrop-blur-xl rounded-full flex items-center justify-center shadow-2xl">
-                                            <Play className="w-10 h-10 text-white fill-current ml-1" />
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-[2px]">
+                                        <div className="w-20 h-20 bg-white/20 backdrop-blur-xl rounded-full border-2 border-white/30 flex items-center justify-center shadow-2xl">
+                                            <Play className="w-10 h-10 text-white fill-white ml-1" />
                                         </div>
                                     </div>
                                 )}
@@ -143,7 +144,7 @@ export default function ProductPage() {
                                     <button
                                         key={idx}
                                         onClick={() => setActiveImage(idx)}
-                                        className={`relative w-24 h-24 flex-shrink-0 rounded-2xl overflow-hidden border-[3px] transition-all shadow-md transform hover:scale-105 ${activeImage === idx ? 'border-chocolate ring-4 ring-chocolate/10' : 'border-white hover:border-chocolate/40'
+                                        className={`relative w-20 h-20 flex-shrink-0 rounded-2xl overflow-hidden border-2 transition-all ${activeImage === idx ? 'border-chocolate shadow-xl scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                                             }`}
                                     >
                                         <Image src={img} alt={`View ${idx}`} fill className="object-cover" />
@@ -152,34 +153,33 @@ export default function ProductPage() {
                             </div>
                         </div>
 
-                        {/* 2. Bloc d'Informations Capitales */}
-                        <div className="space-y-1 border-b border-gray-100 pb-8">
-                            <h1 className="text-3xl md:text-4xl font-[900] text-black tracking-tighter leading-none mb-4">
+                        {/* 2. Infos Capitales */}
+                        <div className="space-y-4 border-b border-chocolate/5 pb-8">
+                            <h1 className="text-3xl md:text-5xl font-black text-chocolate tracking-tighter leading-none font-sans italic">
                                 {product.title}
                             </h1>
 
                             <div className="flex flex-wrap items-center justify-between gap-6">
                                 <div className="flex items-baseline gap-2">
-                                    <span className="text-4xl font-[900] text-chocolate tracking-tighter">
+                                    <span className="text-4xl md:text-5xl font-black text-black tracking-tighter font-sans">
                                         {product.price.toLocaleString()}
                                     </span>
-                                    <span className="text-xl font-black text-chocolate/40">
+                                    <span className="text-xl font-black text-chocolate/30 uppercase tracking-widest font-sans">
                                         {product.currency}
                                     </span>
                                 </div>
 
-                                <div className="flex bg-beige/20 rounded-[2rem] p-1.5 border border-chocolate/5 shadow-sm">
-                                    <button className="p-4 hover:bg-white rounded-full transition-all text-gray-500 hover:text-red-500 active:scale-75">
-                                        <Heart className="w-7 h-7" />
+                                <div className="flex gap-3">
+                                    <button className="w-14 h-14 flex items-center justify-center bg-[#FAF9F6] border border-chocolate/5 rounded-2xl text-chocolate hover:text-red-500 transition-all shadow-sm active:scale-90">
+                                        <Heart className="w-6 h-6" />
                                     </button>
-                                    <div className="w-px bg-chocolate/10 my-3 mx-1"></div>
-                                    <button className="p-4 hover:bg-white rounded-full transition-all text-gray-500">
-                                        <Share2 className="w-7 h-7" />
+                                    <button className="w-14 h-14 flex items-center justify-center bg-[#FAF9F6] border border-chocolate/5 rounded-2xl text-chocolate transition-all shadow-sm active:scale-90">
+                                        <Share2 className="w-6 h-6" />
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 text-xs text-gray-400 font-black uppercase tracking-widest pt-4">
+                            <div className="flex items-center gap-2 text-[10px] font-black text-chocolate/40 uppercase tracking-[.3em] font-sans pt-2">
                                 <Calendar className="w-4 h-4" />
                                 <span>Publié il y a 2 Heures</span>
                             </div>
@@ -191,9 +191,9 @@ export default function ProductPage() {
                         </div>
 
                         {/* 4. Caractéristiques */}
-                        <div className="space-y-6">
-                            <h3 className="font-[900] text-xl text-chocolate uppercase tracking-tight flex items-center gap-3">
-                                <Info className="w-6 h-6" />
+                        <div className="space-y-8">
+                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
+                                <span className="w-8 h-px bg-chocolate/10"></span>
                                 Caractéristiques
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -211,11 +211,14 @@ export default function ProductPage() {
                         </div>
 
                         {/* Description */}
-                        <div className="space-y-4">
-                            <h3 className="font-[900] text-xl text-chocolate uppercase tracking-tight">Description</h3>
-                            <div className={`relative ${!showFullDesc && 'max-h-40 overflow-hidden'}`}>
-                                <p className="text-gray-600 text-[15px] font-medium leading-relaxed whitespace-pre-line">
-                                    Incroyable opportunité ! {product.title} en parfait état. Idéal pour ceux qui recherchent la qualité au meilleur prix.
+                        <div className="space-y-6">
+                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
+                                <span className="w-8 h-px bg-chocolate/10"></span>
+                                Description
+                            </h3>
+                            <div className={`relative ${!showFullDesc && 'max-h-60 overflow-hidden'}`}>
+                                <p className="text-chocolate/70 text-[15px] font-medium leading-[1.8] whitespace-pre-line font-sans">
+                                    {product.title} en parfait état. Idéal pour ceux qui recherchent la qualité au meilleur prix.
 
                                     Détails supplémentaires :
                                     - Testé et approuvé par nos experts
@@ -223,36 +226,44 @@ export default function ProductPage() {
                                     - Livraison rapide possible dans tout le pays
                                 </p>
                                 {!showFullDesc && (
-                                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
+                                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent" />
                                 )}
                             </div>
                             <button
                                 onClick={() => setShowFullDesc(!showFullDesc)}
-                                className="flex items-center gap-2 text-chocolate font-[900] text-sm uppercase tracking-widest hover:underline decoration-2"
+                                className="text-chocolate font-black text-[11px] uppercase tracking-widest border-b-2 border-chocolate/10 pb-1 hover:border-chocolate transition-all"
                             >
-                                {showFullDesc ? 'Masquer' : 'Lire la suite'}
-                                {showFullDesc ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                                {showFullDesc ? 'Masquer' : 'Lire la description complète'}
                             </button>
                         </div>
 
-                        {/* Localisation */}
-                        <div className="space-y-6">
-                            <h3 className="font-[900] text-xl text-chocolate uppercase tracking-tight">Localisation</h3>
-                            <div className="relative h-64 w-full bg-gray-50 rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-inner group">
-                                <Image
-                                    src="https://placehold.co/1000x500/F5F5DC/2B1700.png?text=🗺️+Plan+Direct"
-                                    alt="Map"
-                                    fill
-                                    className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-                                />
-                                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-black/5">
-                                    <div className="bg-white/90 backdrop-blur-xl px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 mb-6 transform hover:scale-110 transition-transform">
-                                        <MapPin className="w-6 h-6 text-chocolate" />
-                                        <span className="font-black text-black uppercase tracking-tight">{product.location}</span>
+                        {/* Localisation (Nouveaux champs textuels) */}
+                        <div className="space-y-8">
+                            <h3 className="font-black text-xs text-chocolate/30 uppercase tracking-[0.4em] flex items-center gap-3">
+                                <span className="w-8 h-px bg-chocolate/10"></span>
+                                Localisation
+                            </h3>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="bg-[#FAF9F6] p-6 rounded-[2rem] border border-chocolate/5 space-y-4">
+                                    <div className="space-y-1">
+                                        <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Pays</p>
+                                        <p className="text-base font-black text-chocolate italic">RD Congo</p>
                                     </div>
-                                    <button className="bg-chocolate text-beige text-xs font-[900] px-8 py-4 rounded-full shadow-2xl tracking-[0.2em] uppercase active:scale-95 transition-all">
-                                        Itinéraire Google Maps
-                                    </button>
+                                    <div className="space-y-1">
+                                        <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest">Ville / Province</p>
+                                        <p className="text-base font-black text-chocolate italic">{product.location}</p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-[#FAF9F6] p-6 rounded-[2rem] border border-chocolate/5 flex flex-col justify-center">
+                                    <p className="text-[10px] font-black text-chocolate/30 uppercase tracking-widest mb-2">Adresse détaillée</p>
+                                    <div className="flex items-start gap-3">
+                                        <MapPin className="text-chocolate shrink-0" size={18} />
+                                        <p className="text-sm font-bold text-chocolate/80 leading-relaxed font-sans">
+                                            Commune de la Gombe, Avenue de la Justice, Quartier Royal.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
