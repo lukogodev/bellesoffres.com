@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Menu, Heart, Play, Plus, User } from 'lucide-react';
+import { ArrowLeft, Menu as IconMenu, Heart, Play, Plus, User } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
@@ -21,30 +21,32 @@ export default function PageHeader({
 }: PageHeaderProps) {
     if (variant === 'home') {
         return (
-            <header className="w-full sticky top-0 z-[60] bg-chocolate shadow-md">
-                <div className="w-full px-4 py-4 md:py-6 flex items-center bg-chocolate text-beige">
-                    {/* Navigation Buttons Left */}
-                    <div className="flex items-center gap-1 md:gap-4 shrink-0">
-                        <Link href="/menu" className="p-2 hover:bg-beige/10 rounded-full transition-all">
-                            <Menu size={22} />
-                        </Link>
-                        <Link href="/publish" className="p-2 hover:bg-beige/10 rounded-full transition-all flex items-center gap-2">
-                            <Plus size={20} className="text-white" />
-                        </Link>
-                        <Link href="/favorites" className="p-2 hover:bg-beige/10 rounded-full transition-all">
-                            <Heart size={20} />
-                        </Link>
-                        <Link href="/profile" className="p-2 hover:bg-beige/10 rounded-full transition-all">
-                            <User size={20} />
+            <header className="w-full sticky top-0 z-[60] bg-[#5D4037] shadow-xl border-b border-[#D7CCC8]/10">
+                <div className="w-full px-4 py-4 md:py-5 flex items-center justify-between bg-[#5D4037] text-[#D7CCC8]">
+
+                    {/* Empty Left Placeholder (for balance if needed, or maybe Logo Icon) */}
+                    <div className="w-20 flex justify-start">
+                        {/* Could be empty or have a small logo */}
+                    </div>
+
+                    {/* Centered Title */}
+                    <div className="flex-1 flex justify-center">
+                        <Link href="/">
+                            <h1 className="text-2xl md:text-3xl font-[900] tracking-tighter capitalize italic font-serif text-[#FAF9F6] drop-shadow-md">
+                                Belles <span className="text-[#D7CCC8]">Offres</span>
+                            </h1>
                         </Link>
                     </div>
 
-                    {/* Site Title / Logo */}
-                    <div className="flex-1 ml-4 overflow-hidden">
-                        <Link href="/">
-                            <h1 className="text-lg md:text-2xl font-[1000] tracking-tighter uppercase leading-none italic truncate">
-                                Belles <span className="text-white">Offres</span>
-                            </h1>
+                    {/* Right Actions */}
+                    <div className="w-20 flex items-center justify-end gap-1">
+                        <Link href="/favorites" className="p-2 hover:bg-[#D7CCC8]/10 rounded-full transition-all text-[#D7CCC8] hover:text-[#FAF9F6]">
+                            <Heart size={22} className="drop-shadow-sm" />
+                            <span className="text-[8px] font-bold uppercase tracking-widest block text-center mt-0.5">Favoris</span>
+                        </Link>
+                        <Link href="/menu" className="p-2 hover:bg-[#D7CCC8]/10 rounded-full transition-all text-[#D7CCC8] hover:text-[#FAF9F6]">
+                            <IconMenu size={22} className="drop-shadow-sm" />
+                            <span className="text-[8px] font-bold uppercase tracking-widest block text-center mt-0.5">Menu</span>
                         </Link>
                     </div>
                 </div>

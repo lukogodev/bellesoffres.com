@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowLeft, Heart, Share2, Home, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Heart, Share2, Home, Volume2, VolumeX, MapPin } from 'lucide-react';
 
 // Icône WhatsApp
 const WhatsAppIcon = () => (
